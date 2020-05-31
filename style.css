@@ -1,0 +1,42 @@
+.done{
+	color: black;
+	text-decoration: line-through;
+}
+
+
+.li-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 5px;
+}
+
+.display{
+	display: flex;
+}
+
+#head{
+	text-align: center;
+	margin: 20px;
+}
+
+.list{
+	max-width: 60%;
+	margin: 0 auto;
+}
+
+li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
+ul li {
+	font-size: 20px;
+	color: grey;
+	text-transform: capitalize;
+	list-style: none;
+	cursor: pointer;
+}
+
