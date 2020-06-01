@@ -45,14 +45,12 @@ function createList(text){
 	ul.appendChild(li);
 	li.appendChild(butt);
 
-
-	butt.addEventListener("click", function(){
-		// localStorage.removeItem("text");
-		li.remove();
-		data.forEach(item =>{
-			localStorage.removeItem("item");
-		})
-	});
+	deleteButton();
+	// butt.addEventListener("click", function(){
+	// 	// localStorage.removeItem("text");
+	// 	li.remove();
+		
+	// });
 
 	// li.addEventListener("click", function(){
 	// 	li.classList.toggle("done");
@@ -73,6 +71,7 @@ function createElement(){
 
 data.forEach(item => {
 	createList(item);
+	deleteButton(item);
 })
 
 console.log(itemsArray);
@@ -97,11 +96,12 @@ function done(e) {
 }
 
 function clear(){
-	ul.remove();
+	// ul.remove();
+	ul.innerHTML = "";
 	localStorage.clear();
 	// while (ul.firstChild) {
- 	//    ul.removeChild(ul.firstChild);
- 	//  }
+ 	// 	 ul.removeChild(ul.firstChild);
+ 	// }
  	// itemsArray = [];
 }
 
