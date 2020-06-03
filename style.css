@@ -20,6 +20,12 @@
 	margin: 20px;
 }
 
+#date{
+	text-align: center;
+	color: grey;
+	font-size: 15px;
+}
+
 .list{
 	max-width: 60%;
 	margin: 0 auto;

@@ -1,3 +1,4 @@
+var date = document.getElementById("date");
 var button = document.getElementById("add");
 var button2 = document.getElementById("clear")
 var input = document.getElementById("input");
@@ -5,9 +6,9 @@ var ul = document.querySelector("ul");
 var li = document.querySelectorAll("li");
 var itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
 
-localStorage.setItem("items", JSON.stringify(itemsArray));
-var data = JSON.parse(localStorage.getItem("items"));
-
+var options = { weekday:'long', month:'short', day:'numeric'};
+var today = new Date();
+date.innerHTML = today.toLocaleDateString("en-US", options);
 
 function inputLength(){
 	return input.value.length;
@@ -69,10 +70,7 @@ function createElement(){
 		
 }
 
-data.forEach(item => {
-	createList(item);
-	deleteButton(item);
-})
+
 
 console.log(itemsArray);
 
@@ -99,11 +97,20 @@ function clear(){
 	// ul.remove();
 	ul.innerHTML = "";
 	localStorage.clear();
+	// localStorage.reload();
 	// while (ul.firstChild) {
  	// 	 ul.removeChild(ul.firstChild);
  	// }
  	// itemsArray = [];
 }
+
+localStorage.setItem("items", JSON.stringify(itemsArray));
+var data = JSON.parse(localStorage.getItem("items"));
+
+data.forEach(item => {
+	createList(item);
+	deleteButton(item);
+})
 
 ul.addEventListener("click", done);
 
