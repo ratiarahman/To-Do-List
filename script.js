@@ -4,8 +4,6 @@ var button2 = document.getElementById("clear")
 var input = document.getElementById("input");
 var ul = document.querySelector("ul");
 var li = document.querySelectorAll("li");
-// var STORE = [];
-// var id = 0;
 var STORE, id;
 // var itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
 
@@ -16,13 +14,16 @@ var today = new Date();
 date.innerHTML = today.toLocaleDateString("en-US", serial);
 
 //STORE DATA
-// localStorage.setItem("items", JSON.stringify(itemsArray));
 var data = localStorage.getItem("TODO");
+
 if(data){
+
 	STORE = JSON.parse(data);
 	id = STORE.length;
 	load(STORE);
+
 }else{
+
 	STORE = [];
 	id = 0;
 }
@@ -39,14 +40,14 @@ function inputLength(){
 	return input.value.length;
 }
 
-function createDeleteButton(){
-	for (var i = 0; i < li.length; i++) {
-		var butt =  document.createElement("i");
-		butt.classList.add("fa","fa-trash");
-		li[i].appendChild(butt);
-	}
+// function createDeleteButton(){
+// 	for (var i = 0; i < li.length; i++) {
+// 		var butt =  document.createElement("i");
+// 		butt.classList.add("fa","fa-trash");
+// 		li[i].appendChild(butt);
+// 	}
 	
-}
+// }
 
 //DELETE
 // function deleteButton(e){
@@ -165,13 +166,12 @@ function done(e) {
 
 function clear(){
 	// ul.remove();
-	ul.innerHTML = "";
+	// ul.innerHTML = "";
+	while (ul.firstChild) {
+ 		 ul.removeChild(ul.firstChild);
+ 	}
 	localStorage.clear();
-	// localStorage.reload();
-	// while (ul.firstChild) {
- 	// 	 ul.removeChild(ul.firstChild);
- 	// }
- 	// itemsArray = [];
+	// localStorage.reload();	
 }
 
 
@@ -187,7 +187,7 @@ button.addEventListener("click", click);
 input.addEventListener("keypress", keypress);
 
 
-createDeleteButton();
+// createDeleteButton();
 // deleteButton();
 
 
