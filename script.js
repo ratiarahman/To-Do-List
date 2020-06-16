@@ -4,11 +4,36 @@ var button2 = document.getElementById("clear")
 var input = document.getElementById("input");
 var ul = document.querySelector("ul");
 var li = document.querySelectorAll("li");
-var itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+// var STORE = [];
+// var id = 0;
+var STORE, id;
+// var itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
 
-var options = { weekday:'long', month:'short', day:'numeric'};
+
+//DATE
+var serial = { weekday:'long', month:'short', day:'numeric'};
 var today = new Date();
-date.innerHTML = today.toLocaleDateString("en-US", options);
+date.innerHTML = today.toLocaleDateString("en-US", serial);
+
+//STORE DATA
+// localStorage.setItem("items", JSON.stringify(itemsArray));
+var data = localStorage.getItem("TODO");
+if(data){
+	STORE = JSON.parse(data);
+	id = STORE.length;
+	load(STORE);
+}else{
+	STORE = [];
+	id = 0;
+}
+
+//DATA TO SHOW
+function load(array){
+	array.forEach(item =>{
+		createList(item.name, item.id, item.bin);
+	});
+}
+
 
 function inputLength(){
 	return input.value.length;
@@ -23,30 +48,59 @@ function createDeleteButton(){
 	
 }
 
-function deleteButton(e){
-	var trash = document.querySelectorAll("i");
-    for(var i = 0; i < trash.length; i++){
-		trash[i].addEventListener("click", removeParent, false);
-	}
-}
+//DELETE
+// function deleteButton(e){
+// 	var trash = document.querySelectorAll("i");
+//     for(var i = 0; i < trash.length; i++){
+// 		trash[i].addEventListener("click", removeParent, false);
+// 	}
+	
+
+// }
 
 function removeParent(evt) {
-  // evt.target.removeEventListener("click", removeParent, false);
-  evt.target.parentNode.remove();
+	evt.parentNode.parentNode.removeChild(evt.parentNode);
+  	// evt.target.parentNode.remove();
+	// localStorage.setItem("TODO", JSON.stringify(STORE));
+  	// itemsArray[trash.id].trash = true;
+	STORE[evt.id].bin = true;
 }
 
+ul.addEventListener("click", function(event){
+		let element = event.target;
+		let elementJob = element.attributes.job.value;
 
-function createList(text){
-	var li = document.createElement("li");
-	li.textContent = text;
+		if(elementJob == "delete"){
+			removeParent(element);
+		}
+
+		localStorage.setItem("TODO", JSON.stringify(STORE));
+});
+
+//CREATELIST
+function createList(text,id,bin){
+	if (bin) {
+		return;
+	}
+	let item = `	<li>
+						<p>${text}</p>
+						<i class="fa fa-trash" job="delete" id="${id}"></i>
+					</li>
+				`;
+
+	let position = "beforeend";
+	ul.insertAdjacentHTML(position, item);
+
+	// var li = document.createElement("li");
+	// li.textContent = text;
 	
-	var butt =  document.createElement("i");
-	butt.classList.add("fa","fa-trash");
+	// var butt =  document.createElement("i");
+	// butt.classList.add("fa","fa-trash");
 
-	ul.appendChild(li);
-	li.appendChild(butt);
+	// ul.appendChild(li);
+	// li.appendChild(butt);
 
-	deleteButton();
+	// deleteButton();
 	// butt.addEventListener("click", function(){
 	// 	// localStorage.removeItem("text");
 	// 	li.remove();
@@ -59,20 +113,36 @@ function createList(text){
 
 }
 
-
+// createList("haha", 1, true);
 
 function createElement(){
-		itemsArray.push(input.value);
-		localStorage.setItem("items", JSON.stringify(itemsArray));
+		var text = input.value;
+		createList(text,id,false);
+		STORE.push(
+			{
+				name:text,
+				id: id,
+				bin: false
+			}
+		);
+
+		localStorage.setItem("TODO", JSON.stringify(STORE));
+		id++;
+
+		// localStorage.setItem("items", JSON.stringify(itemsArray));
 		// li.appendChild(document.createTextNode(input.value));
-		createList(input.value);
 		input.value = "";
 		
 }
 
 
+//DATA TO SHOW
+// data.forEach(item => {
+// 	createList(item);
+// 	deleteButton(item);
+// })
 
-console.log(itemsArray);
+// console.log(itemsArray);
 
 
 function click(){
@@ -104,13 +174,9 @@ function clear(){
  	// itemsArray = [];
 }
 
-localStorage.setItem("items", JSON.stringify(itemsArray));
-var data = JSON.parse(localStorage.getItem("items"));
 
-data.forEach(item => {
-	createList(item);
-	deleteButton(item);
-})
+
+
 
 ul.addEventListener("click", done);
 
@@ -122,7 +188,7 @@ input.addEventListener("keypress", keypress);
 
 
 createDeleteButton();
-deleteButton();
+// deleteButton();
 
 
 

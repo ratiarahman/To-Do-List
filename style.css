@@ -4,7 +4,7 @@
 }
 
 
-.li-wrapper {
+/*.li-wrapper {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -13,7 +13,7 @@
 
 .display{
 	display: flex;
-}
+}*/
 
 #head{
 	text-align: center;
