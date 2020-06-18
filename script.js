@@ -1,4 +1,4 @@
-var date = document.getElementById("date");
+var date = document.getElementsByClassName("date");
 var button = document.getElementById("add");
 var button2 = document.getElementById("clear")
 var input = document.getElementById("input");
@@ -11,10 +11,17 @@ var STORE, id;
 //DATE
 var serial = { weekday:'long', month:'short', day:'numeric'};
 var today = new Date();
-date.innerHTML = today.toLocaleDateString("en-US", serial);
+date[0].innerHTML = today.toLocaleDateString("en-US", serial);
+// for(var i =0;i<date.length;i++){
+// date[i].innerHTML = today.toLocaleDateString("en-US", serial);
+// }
+
+// var d = date[1].innerHTML = today.toLocaleDateString("en-US", serial);
 
 //STORE DATA
 var data = localStorage.getItem("TODO");
+
+
 
 if(data){
 
@@ -31,7 +38,7 @@ if(data){
 //DATA TO SHOW
 function load(array){
 	array.forEach(item =>{
-		createList(item.name, item.id, item.bin);
+		createList(item.name, item.id, item.bin,item.date);
 	});
 }
 
@@ -62,8 +69,6 @@ function inputLength(){
 function removeParent(evt) {
 	evt.parentNode.parentNode.removeChild(evt.parentNode);
   	// evt.target.parentNode.remove();
-	// localStorage.setItem("TODO", JSON.stringify(STORE));
-  	// itemsArray[trash.id].trash = true;
 	STORE[evt.id].bin = true;
 }
 
@@ -83,10 +88,14 @@ function createList(text,id,bin){
 	if (bin) {
 		return;
 	}
-	let item = `	<li>
+	date[1].innerHTML = today.toLocaleDateString("en-US", serial);
+	// <li class = "active-list">${date}</li>
+	let item = `	
+					<li>
 						<p>${text}</p>
 						<i class="fa fa-trash" job="delete" id="${id}"></i>
 					</li>
+				
 				`;
 
 	let position = "beforeend";
@@ -116,22 +125,22 @@ function createList(text,id,bin){
 
 // createList("haha", 1, true);
 
+
 function createElement(){
 		var text = input.value;
+		
+		
 		createList(text,id,false);
 		STORE.push(
 			{
 				name:text,
 				id: id,
-				bin: false
+				bin: false,
 			}
 		);
 
 		localStorage.setItem("TODO", JSON.stringify(STORE));
 		id++;
-
-		// localStorage.setItem("items", JSON.stringify(itemsArray));
-		// li.appendChild(document.createTextNode(input.value));
 		input.value = "";
 		
 }
@@ -147,14 +156,15 @@ function createElement(){
 
 
 function click(){
-	if (inputLength() > 0) {
+	if (inputLength() > 0 && input.value.trim() != "") {
 		createElement();
 	}
 }
 
 function keypress(e){
-	if (inputLength() > 0 && e.keyCode === 13) { //key.which wil also work
+	if (inputLength() > 0 && input.value.trim() != "" && e.keyCode === 13) { //key.which wil also work
 		createElement();
+
 	}
 }
 
@@ -166,10 +176,11 @@ function done(e) {
 
 function clear(){
 	// ul.remove();
-	// ul.innerHTML = "";
-	while (ul.firstChild) {
- 		 ul.removeChild(ul.firstChild);
- 	}
+	ul.innerHTML = "";
+	date[1].innerHTML = "";
+	// while (ul.firstChild) {
+ // 		 ul.removeChild(ul.firstChild);
+ // 	}
 	localStorage.clear();
 	// localStorage.reload();	
 }

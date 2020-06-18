@@ -20,10 +20,10 @@
 	margin: 20px;
 }
 
-#date{
+.date{
 	text-align: center;
 	color: grey;
-	font-size: 15px;
+	/*font-size: 15px;*/
 }
 
 .list{
